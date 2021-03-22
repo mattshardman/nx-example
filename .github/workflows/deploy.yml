@@ -1,0 +1,78 @@
+name: "Nx"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # setup node version
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: "https://npm.pkg.github.com"
+
+      # set up credentials for terraform and aws cli
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      # install dependencies
+      - name: Install dependecies
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # configure git
+      - name: Configure Git User
+        run: |
+          git config --global user.email "mattshardman@gmail.com"
+          git config --global user.name "@$GITHUB_ACTOR"
+      - name: Transpile libs
+        run: yarn build
+
+      # lerna version
+      - name: Version
+        run: lerna version --yes --conventional-commits
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # publish node library to github actions
+      - name: Publish libs
+        run: npx lerna publish from-package --yes
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # transpile api ts to js and create lambda layer
+      - name: Transpile apps
+        run: yarn package
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # check if tf state bucket exists and create it if it doesn't
+      - name: Check for state bucket
+        shell: bash
+        run: bash ./init.sh
+
+      # run terraform to create api gateway and lambda
+      - name: Deploy
+        run: pwd && terraform init && terraform plan && terraform apply -auto-approve

@@ -2,6 +2,37 @@
 
 # Nxtest
 
+This is a work in progress!
+
+This example deploys a standard nx workspace to AWS using github actions and terraform.
+
+## Workspace set up:
+
+- ui: next.js app, this is deployed to vercel using the standard vercel github integration.
+- api: apollo graphql api, deployed to aws as a lambda with nodejs modules layer
+- test-lib: example node library, published to github packages using lerna
+
+## Deployment process
+
+### Libs
+- node libs are built using standard nx build target
+- libs are version and published to github packages using lerna
+
+### Apps
+- apps are build using custom package nx target 
+- custom target uses swc (in this case but could use whatever tsc, babel etc) to transpile ts to js and create lambda layer for node_modules
+- github actions installs dependencies to layer and libs from github packages
+- terraform reads state from s3 bucket (or creates it if it doesn't exist) and then creates an api gateway and lambda function for the api
+
+### Ui
+(currently built using vercel github integration - but could be aws s3 etc)
+- the ui (nextjs) is build using the standard nx build target
+- a custom script is added to build this (build:ui)
+- the repo is linked to vercel
+- vercel default build settings updated: `build command: yarn build:ui`, `output direction: dist/apps/ui/.next`
+
+
+
 This project was generated using [Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
