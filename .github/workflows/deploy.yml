@@ -76,4 +76,5 @@ jobs:
 
       # run terraform to create api gateway and lambda
       - name: Deploy
+        working-directory: "./terraform"
         run: pwd && terraform init && terraform plan && terraform apply -auto-approve
