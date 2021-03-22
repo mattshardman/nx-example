@@ -70,6 +70,7 @@ jobs:
 
       # check if tf state bucket exists and create it if it doesn't
       - name: Check for state bucket
+        working-directory: "./build"
         shell: bash
         run: bash ./init.sh
 
