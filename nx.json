@@ -1,0 +1,29 @@
+{
+    "implicitDependencies": {
+        "workspace.json": "*",
+        "package.json": { "dependencies": "*", "devDependencies": "*" },
+        "tsconfig.base.json": "*",
+        "tslint.json": "*",
+        ".eslintrc.json": "*",
+        "nx.json": "*"
+    },
+    "affected": { "defaultBase": "master" },
+    "npmScope": "@mattshardman",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/nx-cloud",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "accessToken": "NzBmNzRjMjktNWIxNi00NzFkLWFhNmItYjE1ZjJmNmUzN2Y4fHJlYWQtd3JpdGU=",
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true
+            }
+        }
+    },
+    "projects": {
+        "ui": { "tags": [] },
+        "ui-e2e": { "tags": [], "implicitDependencies": ["ui"] },
+        "api": { "tags": [] },
+        "test-lib": { "tags": [] }
+    }
+}

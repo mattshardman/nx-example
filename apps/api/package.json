@@ -1,0 +1,16 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "swc src/app/index.ts -o dist/lambda/index.js && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json"
+  },
+  "dependencies": {
+    "apollo-server-lambda": "^2.21.1",
+    "graphql": "^15.5.0",
+    "@mattshardman/test-lib": "*"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.35",
+    "@swc/core": "^1.2.50"
+  }
+}

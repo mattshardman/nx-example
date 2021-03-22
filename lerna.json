@@ -1,0 +1,12 @@
+{
+  "packages": ["libs/*"],
+  "version": "independent",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "publish",
+      "registry": "https://npm.pkg.github.com",
+      "allowBranch": "test"
+    }
+  }
+}
