@@ -2,14 +2,17 @@
   "name": "api",
   "version": "1.0.0",
   "scripts": {
-    "build": "swc src/app/index.ts -o dist/lambda/index.js && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json"
+    "build2": "swc src/app/index.ts -o dist/lambda/index.js && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json",
+    "build": "rollup -c && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json"
   },
   "dependencies": {
+    "@mattshardman/test-lib": "*",
     "apollo-server-lambda": "^2.21.1",
-    "graphql": "^15.5.0",
-    "@mattshardman/test-lib": "*"
+    "graphql": "^15.5.0"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.2",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@swc/cli": "^0.1.35",
     "@swc/core": "^1.2.50"
   }

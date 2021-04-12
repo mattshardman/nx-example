@@ -16,7 +16,7 @@ const resolvers = {
     }
 };
 
-export const apolloConfig: Config = {
+export const apolloConfig = {
     typeDefs,
     resolvers,
     playground: { endpoint: "/graphql" }

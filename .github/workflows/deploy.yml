@@ -3,7 +3,7 @@ name: "Nx"
 on:
   push:
     branches:
-      - main
+      - rollup
 
 jobs:
   terraform:
@@ -50,17 +50,17 @@ jobs:
       - name: Transpile libs
         run: yarn build
 
-      # lerna version
-      - name: Version
-        run: lerna version --yes --conventional-commits
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # # lerna version
+      # - name: Version
+      #   run: lerna version --yes --conventional-commits
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      # publish node library to github actions
-      - name: Publish libs
-        run: npx lerna publish from-package --yes
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # # publish node library to github actions
+      # - name: Publish libs
+      #   run: npx lerna publish from-package --yes
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       # transpile api ts to js and create lambda layer
       - name: Transpile apps
