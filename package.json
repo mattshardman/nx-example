@@ -5,8 +5,8 @@
     "scripts": {
         "nx": "nx",
         "start": "nx run-many --target=serve --projects=ui,api --parallel",
-        "package": "nx run-many --target=package --projects=api",
-        "build": "nx run test-lib:build --prod",
+        "package": "nx affected:apps --prod --base=main",
+        "build": "nx affected:libs --prod --base=main",
         "build:ui": "nx build ui",
         "test": "nx test",
         "lint": "nx workspace-lint && nx lint",
