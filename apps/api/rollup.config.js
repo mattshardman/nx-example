@@ -2,9 +2,7 @@ import path from "path";
 import alias from "@rollup/plugin-alias";
 import typescript from "@rollup/plugin-typescript";
 
-const p = path.resolve(__dirname, "../../dist/libs/test-lib");
-
-console.log(p);
+const testLibPath = path.resolve(__dirname, "../../dist/libs/test-lib");
 
 module.exports = {
     input: "./src/app/index.ts",
@@ -17,7 +15,7 @@ module.exports = {
         typescript(),
         alias({
             entries: {
-                "@mattshardman/test-lib": p
+                "@mattshardman/test-lib": testLibPath
             }
         })
     ]
