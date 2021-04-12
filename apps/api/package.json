@@ -2,7 +2,6 @@
   "name": "api",
   "version": "1.0.0",
   "scripts": {
-    "build2": "swc src/app/index.ts -o dist/lambda/index.js && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json",
     "build": "rollup -c && mkdir -p dist/layer/nodejs && cp package.json dist/layer/nodejs && cd dist/layer/nodejs && yarn --production && rm package.json"
   },
   "dependencies": {
