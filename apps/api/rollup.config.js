@@ -9,7 +9,7 @@ console.log(p);
 module.exports = {
     input: "./src/app/index.ts",
     output: {
-        dir: "dist",
+        dir: "dist/lambda",
         format: "cjs"
     },
     // preserveModules: true,
